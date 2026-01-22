@@ -30,7 +30,7 @@ nav a {
 
 nav {
   position: absolute;
-  background-color: #9da7d1;
+  background-color: darkkhaki;
   font-size: 1rem;
   padding-left: 20px;
   padding-right: 20px;
@@ -49,7 +49,7 @@ nav {
 
 header {
   position: relative;
-  color: #fff;
+  color: darkkhaki;
   font-size: 1.5rem;
 }
 
@@ -140,7 +140,7 @@ section {
   margin-bottom: 100px;
 }
 footer {
-  background-color: #cc7eb5;
+  background-color: darkkhaki;
 }
 
 footer a {
@@ -215,7 +215,7 @@ footer a {
 }
 
 .blog-fee-page-line-separator {
-  background-color: #cc7eb5;
+  background-color:darkkhaki;
   width: 100%;
   margin: 20px 0;
   height: 80px;
@@ -361,7 +361,7 @@ footer a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 3px solid #cc7eb5;
+  border: 3px solid darkkhaki;
   width: 40%;
   margin: 50px auto;
   padding: 2rem;
@@ -390,7 +390,7 @@ footer a {
 
 .login-box button {
   margin-top: 100px;
-  background-color: #cc7eb5;
+  background-color: darkkhaki;
   height: 70px;
   border: 0;
   font-size: 1.5rem;
@@ -431,7 +431,7 @@ footer a {
 }
 
 .edit-line-separator {
-  background-color: #cc7eb5;
+  background-color: darkkhaki;
   width: 100%;
   margin: 10px 0;
   height: 5px;
@@ -482,7 +482,7 @@ footer a {
 .creat-post-thumbnail-banner {
   display: flex;
   justify-content: space-between;
-  background-color: #cc7eb5;
+  background-color: darkkhaki;
   padding: 0 12px;
   margin-top: 50px;
 }
@@ -546,7 +546,7 @@ footer a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 3px solid #cc7eb5;
+  border: 3px solid darkkhaki;
   width: 70%;
   margin: 50px auto;
   padding: 2rem;
@@ -573,7 +573,7 @@ footer a {
 
 .create-post-box button {
   margin-top: 100px;
-  background-color: #cc7eb5;
+  background-color: darkkhaki;
   height: 70px;
   border: 0;
   font-size: 1.5rem;
@@ -595,7 +595,7 @@ footer a {
 .href-btn {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #cc7eb5;
+  background-color: darkkhaki;
   color: #fff;
   text-decoration: none;
   border-radius: 4px;
