@@ -1,40 +1,48 @@
-import { supabase } from './supabase.js';
+import { supabase } from "./supabase.js";
 
-const registerForm = document.querySelector('form');
+const registerForm = document.getElementById("register-form");
 
-registerForm.addEventListener('submit', async function (e) {
-  e.preventDefault();
+registerForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-  const form = e.target;
-  const email = form.email.value.trim();
-  const password = form.password.value;
-  const fieldset = form.querySelector("fieldset");
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const fieldset = registerForm.querySelector("fieldset");
 
-try {
-    fieldset.disabled = true;
+    try {
+        fieldset.disabled = true;
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
+        console.log("Registering user:", email);
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password
+        });
 
-    if (error) {
-      displayMessage("#message-container", "error", error.message);
-      return;
+        console.log("Supabase response:", data, error);
+        if (error) {
+            const errorMessageElement = document.getElementById("registerMessage");
+            errorMessageElement.style.display = "block";
+            errorMessageElement.style.color = "red";
+            errorMessageElement.innerHTML = error.message;
+            return;
+        }
+
+        if (data.user) {
+            const errorMessageElement = document.getElementById("registerMessage");
+            errorMessageElement.style.display = "block";
+            errorMessageElement.style.color = "green";
+            errorMessageElement.innerHTML = "Registration successful! Please check your email to verify your account.";
+
+            
+            registerForm.reset();
+        }
+    } catch (error) {
+        console.log('>>>error>>>',error);
+        const errorMessageElement = document.getElementById("registerMessage");
+        errorMessageElement.style.display = "block";
+        errorMessageElement.style.color = "red";
+        errorMessageElement.innerHTML = error;
+    } finally {
+        fieldset.disabled = false;
     }
-
-    if (data.user) {
-      displayMessage(
-        "#message-container",
-        "success",
-        "Registration successful! Please check your email to verify your account."
-      );
-      form.reset();
-    }
-  } catch (error) {
-    console.log(error);
-    displayMessage("#message-container", "error", error.toString());
-  } finally {
-    fieldset.disabled = false;
-  }
 });
