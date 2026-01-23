@@ -1,32 +1,38 @@
-import { supabase } from './supabase.js';
-import { displayMessage } from './ui.js';
+import { supabase } from "./supabase.js";
 
-const form = document.querySelector('form');
+const loginForm = document.getElementById("login-form");
 
-form.addEventListener('submit', async function (e) {
-  e.preventDefault();
+loginForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-  const form = e.target;
-  const email = form.email.value.trim();
-  const password = form.password.value;
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
 
-  try {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
 
-    if (error) {
-      displayMessage('#message-container', 'error', error.message);
-      return;
+        console.log("Supabase response:", data, error);
+        if (error) {
+            const errorMessageElement = document.getElementById("errorMessage");
+            errorMessageElement.style.display = "block";
+            errorMessageElement.style.color = "red";
+            errorMessageElement.innerHTML = error.message;
+            return;
+        }
+
+        if (data.user) {
+            console.log("user--:", data.user);
+            console.log("session--:", data.session);
+            // window.location.href = "/";
+        }
+    } catch (error) {
+        console.log(">>>error>>>", error);
+        const errorMessageElement = document.getElementById("errorMessage");
+        errorMessageElement.style.display = "block";
+        errorMessageElement.style.color = "red";
+        errorMessageElement.innerHTML = error;
     }
-
-    if (data.user) {
-      //   console.log("user", data.user);
-      //   console.log("session", data.session);
-      location.href = '/';
-    }
-  } catch (error) {
-    displayMessage('#message-container', 'error', error.toString());
-  }
 });

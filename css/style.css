@@ -37,6 +37,10 @@ nav {
   z-index: 1000;
 }
 
+nav a.active {
+    color: black;
+    font-weight: bold;
+}
 
 .hamburger-icon {
   color: black;

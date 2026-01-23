@@ -20,7 +20,7 @@ registerForm.addEventListener("submit", async function (e) {
 
         console.log("Supabase response:", data, error);
         if (error) {
-            const errorMessageElement = document.getElementById("registerMessage");
+            const errorMessageElement = document.getElementById("errorMessage");
             errorMessageElement.style.display = "block";
             errorMessageElement.style.color = "red";
             errorMessageElement.innerHTML = error.message;
@@ -28,7 +28,7 @@ registerForm.addEventListener("submit", async function (e) {
         }
 
         if (data.user) {
-            const errorMessageElement = document.getElementById("registerMessage");
+            const errorMessageElement = document.getElementById("errorMessage");
             errorMessageElement.style.display = "block";
             errorMessageElement.style.color = "green";
             errorMessageElement.innerHTML = "Registration successful! Please check your email to verify your account.";
@@ -38,7 +38,7 @@ registerForm.addEventListener("submit", async function (e) {
         }
     } catch (error) {
         console.log('>>>error>>>',error);
-        const errorMessageElement = document.getElementById("registerMessage");
+        const errorMessageElement = document.getElementById("errorMessage");
         errorMessageElement.style.display = "block";
         errorMessageElement.style.color = "red";
         errorMessageElement.innerHTML = error;

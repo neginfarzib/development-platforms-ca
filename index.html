@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>News Articles | Home</title>
+    <meta name="description"
+          content="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+<header>
+    <input type="checkbox" id="menu-checkbox">
+    <label for="menu-checkbox" class="hamburger-icon"><i class="fa fa-bars"></i></label>
+    <nav>
+        <div id="nav-div-1">
+            <div id="nav-div-2">
+                <img class="logo" src="assets/logo.svg " alt="ButterflyForum-logo">
+                <a href="index.html" class="active">Home</a>            
+            </div>
+            <div>
+                <a href="account/login.html">Login in</a>
+                <a href="account/register.html">Register</a>
+            </div>
+        </div>
+    </nav>
+</header>
+<main>
+    <div>
+        <div class="row">
+            <p id="errorMessage" ></p>
+        </div>
+        <div id="article-post-container">
+        </div>
+    </div>
+</main>
+<footer class="row-footer">
+    <div class="footr-column">
+        <a href="index.html" >Home</a>
+        <a href="#" >Terms & Condition</a>
+    </div>
+</footer>
+
+<script type="module" src="js/article-feed-main.js"></script>
+</body>
+
+</html>
