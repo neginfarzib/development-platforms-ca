@@ -1,129 +1,99 @@
-import {allPosts, searchPostAPI} from "./manage-all-article.js";
-const base_url = "https://v2.api.noroff.dev";
-const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric' , minute: 'numeric', hour12: false};
+import { allArticles } from "./manage-all-article.js";
+import { supabase } from "./supabase.js";
+
+const options = { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", hour12: false };
 
 /**
  * Fetching all articles. Then sort them by date
  *
- * @return {Promise<object[]>} A promise that resolves to an array of post objects sorted by date.
-* */
-export async function dateSortedAllPosts(){
-    let posts = await allPosts();
-    let sortedAllPosts = posts.data.sort((a, b) => new Date(b.created) - new Date(a.created));
-    return sortedAllPosts;
+ * @return {Promise<object[]>} A promise that resolves to an array of article objects sorted by date.
+ * */
+export async function dateSortedAllArticles() {
+    let articles = await allArticles();
+    let sortedAllArticles = articles.sort((a, b) => new Date(b.created) - new Date(a.created));
+    return sortedAllArticles;
 }
 
-document.addEventListener('DOMContentLoaded',async () => {
-    const blogPostsThumbnail = document.getElementById('article-post-container');
-    const errorMessageElement = document.getElementById('errorMessage');
+document.addEventListener("DOMContentLoaded", async () => {
+    const articlePostsThumbnail = document.getElementById("article-post-container");
+    const errorMessageElement = document.getElementById("errorMessage");
 
-    const posts = await dateSortedAllPosts();
-    console.log(posts.length)
-    displayPosts(posts);
+    const articles = await dateSortedAllArticles();
+    console.log(articles.length);
+    displayArticles(articles);
 
-    function displayPosts(posts){
-        blogPostsThumbnail.innerHTML = '';
+    async function displayArticles(articles) {
+        articlePostsThumbnail.innerHTML = "";
 
-        const inputSearchPostsDiv = document.createElement('div');
-        inputSearchPostsDiv.classList.add('search-blog-thumbnail');
+        const result = await supabase.auth.getSession();
+        const session = result.data.session;
+        if (session) {
+            const loginIde = document.getElementById("login-id");
+            loginIde.innerText = session.user.email || "User";
+            loginIde.href = "#";
 
-        const inputBtnSearchPostsDiv = document.createElement('div');
-        inputBtnSearchPostsDiv.classList.add('search-blog-thumbnail-input-btn');
-        const inputSearchPosts = document.createElement('input');
-        inputSearchPosts.type = 'text';
-        inputSearchPosts.id = 'searchPosts';
-        inputSearchPosts.placeholder = 'Search all posts ...'
-        inputBtnSearchPostsDiv.appendChild(inputSearchPosts);
-        const searchPostsBtn = document.createElement('button');
-        searchPostsBtn.classList.add('search-blog-thumbnail-btn')
-        searchPostsBtn.textContent = 'Search';
-        searchPostsBtn.addEventListener('click', async function (e) {
-            e.preventDefault();
-            const searchInput = document.getElementById('searchPosts').value.trim()
-            const searchPostsList = await searchPostAPI(searchInput);
-            displayPosts(searchPostsList);
-        })
-        inputBtnSearchPostsDiv.appendChild(searchPostsBtn);
-        inputSearchPostsDiv.appendChild(inputBtnSearchPostsDiv);
-
-        const editLineSeperator = document.createElement('div');
-        editLineSeperator.classList.add("edit-line-separator");
-        inputSearchPostsDiv.appendChild(editLineSeperator);
-
-        blogPostsThumbnail.appendChild(inputSearchPostsDiv);
+            const registerId = document.getElementById("register-id");
+            registerId.innerText = "Logout";
+            registerId.href = "#";
+            registerId.addEventListener("click", async (e) => {
+                e.preventDefault();
+                const { error } = await supabase.auth.signOut();
+                if (error) {
+                    console.log("Error signing out:", error.message);
+                } else {
+                    window.location.href = "./account/login.html";
+                }
+            });
 
 
-        
-        const maxPosts = posts.length;
-        const postToShow = posts.slice(0, maxPosts);
+            const createArticle = document.createElement("div");
+            createArticle.classList.add("create-article-container");
+            const createArticleLink = document.createElement("a");
+            createArticleLink.classList.add("create-article-link-btn");
+            createArticleLink.href = "./article/create-article.html";
+            createArticleLink.textContent = "Create New Article";
+            createArticle.appendChild(createArticleLink);
+            articlePostsThumbnail.appendChild(createArticle);
+        } 
 
-        postToShow.forEach(post =>{
-            const blogThumbnail = document.createElement('div');
-            blogThumbnail.classList.add('blog-thumbnail');
+        const maxArticles = articles.length;
+        const articleToShow = articles.slice(0, maxArticles);
 
-            if(post.author){
-                const authorHref = document.createElement('a');
-                authorHref.href = 'post/user-posts.html?name-of-user=' + post.author.name;
+        articleToShow.forEach((article) => {
+            const articleThumbnail = document.createElement("div");
+            articleThumbnail.classList.add("article-thumbnail");
 
-                const author = document.createElement('div');
+            const articleTitle = document.createElement("h3");
+            articleTitle.textContent = article.title;
+            articleThumbnail.appendChild(articleTitle);
 
-                const postAuthorIcon = document.createElement('img');
-                postAuthorIcon.src = 'assets/person-icon.svg';
-                postAuthorIcon.alt = 'author-icon'
-                author.appendChild(postAuthorIcon);
+            const articleBody = document.createElement("p");
+            articleBody.textContent = article.body;
+            articleThumbnail.appendChild(articleBody);
 
-                const postAuthor = document.createElement('h4');
-                postAuthor.textContent = post.author.name;
-                author.appendChild(postAuthor)
+            const articleCategoryDL = document.createElement("dl");
+            const articleCategoryDT = document.createElement("dt");
+            articleCategoryDT.textContent = "Category: ";
+            articleCategoryDL.appendChild(articleCategoryDT);
+            const articleCategoryDD = document.createElement("dd");
+            articleCategoryDD.textContent = article.category;
+            articleCategoryDL.appendChild(articleCategoryDD);
+            articleThumbnail.appendChild(articleCategoryDL);
 
-                authorHref.appendChild(author)
-                blogThumbnail.appendChild(authorHref);
-            }
+            const articleCreatedTime = document.createElement("p");
+            articleCreatedTime.classList.add("article-thumbnail-created-time-p");
+            const date = new Date(article.created);
+            articleCreatedTime.textContent = date.toLocaleDateString("en-US", options);
+            articleThumbnail.appendChild(articleCreatedTime);
 
-            const postCreatedTime = document.createElement('p');
-            postCreatedTime.classList.add('blog-thumbnail-created-time-p')
-            const date = new Date(post.created)
-            postCreatedTime.textContent = date.toLocaleDateString('en-US', options);
-            blogThumbnail.appendChild(postCreatedTime);
-
-            const blogThumbnailHref = document.createElement('a');
-            blogThumbnailHref.href = 'post/index.html?blog-post-id='+post.id;
-            // blogThumbnailHref.target = '_blank';
-
-            const postTitle = document.createElement('h6');
-            postTitle.textContent = post.title;
-            blogThumbnailHref.appendChild(postTitle)
-            blogThumbnail.appendChild(blogThumbnailHref);
-
-            if(post.media){
-                const postImage = document.createElement('img');
-                postImage.classList.add('blog-thumbnail-img')
-                postImage.src = post.media?.url || '';
-                postImage.alt = post.media?.alt || '';
-                blogThumbnailHref.appendChild(postImage)
-                blogThumbnail.appendChild(blogThumbnailHref);
-            }
-
-            const postContent = document.createElement('p');
-            postContent.textContent = post.body?.split(/\s+/).slice(0, 50).join(' ') || '';
-            blogThumbnailHref.appendChild(postContent);
-            blogThumbnail.appendChild(blogThumbnailHref);
-
-            const postReadMore = document.createElement('p');
-            postReadMore.textContent = 'Read more...';
-            blogThumbnailHref.appendChild(postReadMore);
-            blogThumbnail.appendChild(blogThumbnailHref);
-
-
-            // Append the product box to the container
-            blogPostsThumbnail.appendChild(blogThumbnail);
+            // Append the article box to the container
+            articlePostsThumbnail.appendChild(articleThumbnail);
         });
-        const errorMessageDiv = document.createElement('div');
-        errorMessageDiv.classList.add('row');
-        const errorMessageP = document.createElement('p');
-        errorMessageP.id='errorMessage';
+        const errorMessageDiv = document.createElement("div");
+        errorMessageDiv.classList.add("row");
+        const errorMessageP = document.createElement("p");
+        errorMessageP.id = "errorMessage";
         errorMessageDiv.appendChild(errorMessageP);
-        blogPostsThumbnail.appendChild(errorMessageDiv);
-
+        articlePostsThumbnail.appendChild(errorMessageDiv);
     }
-})
+});

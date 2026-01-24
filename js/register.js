@@ -31,13 +31,21 @@ registerForm.addEventListener("submit", async function (e) {
             const errorMessageElement = document.getElementById("errorMessage");
             errorMessageElement.style.display = "block";
             errorMessageElement.style.color = "green";
-            errorMessageElement.innerHTML = "Registration successful! Please check your email to verify your account.";
+            errorMessageElement.innerHTML = "Registration was successful! Please check your email to verify your account.";
 
-            
             registerForm.reset();
         }
+
+        if (data.user?.identities?.length === 0) {
+            const errorMessageElement = document.getElementById("errorMessage");
+            errorMessageElement.style.display = "block";
+            errorMessageElement.style.color = "red";
+            errorMessageElement.innerHTML = "User already exists. Please log in.";
+
+            return;
+        }
     } catch (error) {
-        console.log('>>>error>>>',error);
+        console.log(">>>error>>>", error);
         const errorMessageElement = document.getElementById("errorMessage");
         errorMessageElement.style.display = "block";
         errorMessageElement.style.color = "red";

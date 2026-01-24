@@ -24,9 +24,7 @@ loginForm.addEventListener("submit", async function (e) {
         }
 
         if (data.user) {
-            console.log("user--:", data.user);
-            console.log("session--:", data.session);
-            // window.location.href = "/";
+            window.location.href = "../index.html";
         }
     } catch (error) {
         console.log(">>>error>>>", error);

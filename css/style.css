@@ -228,82 +228,39 @@ footer a {
   height: 80px;
 }
 
-#blog-post-container {
+#article-post-container {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   gap: 20px;
   padding: 20px;
-  width: 70%;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-.blog-thumbnail {
+.create-article-container {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.article-thumbnail {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
-  width: 700px;
-  margin: 1rem auto;
+  
+  width: 100%;
+  max-width: 700px;   /* keeps desktop nice */
+  
+  margin: 2rem auto;
   padding: 1rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.search-blog-thumbnail-input-btn {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 700px;
-  margin: 1rem auto;
-  font-family: Arial, sans-serif;
-  gap: 0.5rem;
-}
-
-.search-blog-thumbnail-input-btn input {
-  flex: 7; /* 70% */
-  padding: 0.5rem;
-  font-size: 1rem;
-}
-
-.search-blog-thumbnail-input-btn button {
-  flex: 3; /* 30% */
-  padding: 0.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
-}
-
-.search-blog-thumbnail {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 700px;
-  margin: 1rem auto;
-  padding: 1rem;
-  font-family: Arial, sans-serif;
-}
-
-.search-blog-thumbnail label {
-  font-weight: bold;
-  color: #333;
-}
-
-.search-blog-thumbnail input {
-  padding: 0.6rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: all 0.2s ease-in-out;
-}
-
-.search-blog-thumbnail input:focus {
-  border-color: #0077ff;
-  box-shadow: 0 0 4px rgba(0, 119, 255, 0.4);
-  outline: none;
-}
 
 .edit-line-separator {
   margin-top: 0.5rem;
@@ -311,47 +268,60 @@ footer a {
   background-color: #ddd;
 }
 
-.blog-thumbnail a {
+.article-thumbnail a {
   display: block; /* make anchor behave like a div */
   text-decoration: none; /* remove underline */
   color: inherit; /* inherit color for text */
 }
 
-.blog-thumbnail-img {
+.article-thumbnail-img {
   display: block; /* avoid spacing under image */
   width: 100%; /* make image fill container if needed */
   object-fit: cover;
 }
 
-.blog-thumbnail div {
+.article-thumbnail div {
   display: flex;
   flex-direction: row;
 }
 
-.blog-thumbnail h4 {
+.article-thumbnail h3 {
   margin: 0 0 0.5rem;
 }
 
-.blog-thumbnail-created-time-p {
-  margin-top: 0px;
+.article-thumbnail-created-time-p {
+  margin-top: 20px;
 }
 
-.blog-thumbnail div img {
+.article-thumbnail div img {
   width: 25px;
   height: 25px;
   margin-right: 0.5rem;
   vertical-align: middle;
 }
 
-.blog-thumbnail h6 {
+.article-thumbnail h6 {
   margin: 0 0 1rem;
 }
 
-.blog-thumbnail p {
+.article-thumbnail p {
   font-size: 0.9rem;
   color: #555;
+  white-space: pre-line;
 }
-
+.create-article-link-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: darkkhaki;
+  color: black;
+  text-decoration: none;
+  border-radius: 4px;
+  font-family: sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
 .our-mission img {
   width: 500px;
   margin: 100px 20px;
@@ -369,7 +339,7 @@ footer a {
   flex-direction: column;
   justify-content: center;
   border: 3px solid darkkhaki;
-  width: 40%;
+  max-width: 800px;
   margin: 50px auto;
   padding: 2rem;
 }
@@ -378,7 +348,7 @@ footer a {
   flex-direction: column;
 }
 
-.create-post-box form {
+.create-article-box form {
   display: flex;
   flex-direction: column;
 }
@@ -435,12 +405,12 @@ footer a {
   margin-bottom: 0;
 }
 
-.manage-all-posts {
+.manage-all-articles {
   width: 70%;
   margin: 50px auto;
 }
 
-.manage-all-posts h3 {
+.manage-all-articles h3 {
   font-weight: normal;
   margin-bottom: 0;
 }
@@ -547,17 +517,7 @@ footer a {
   font-family: inherit;
 }
 
-.manage-all-posts {
-  width: 70%;
-  margin: 50px auto;
-}
-
-.manage-all-posts h3 {
-  font-weight: normal;
-  margin-bottom: 0;
-}
-
-.create-post-box {
+.create-article-box {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -566,11 +526,11 @@ footer a {
   margin: 50px auto;
   padding: 2rem;
 }
-.create-post-box div {
+.create-article-box div {
   margin-top: 20px;
 }
 
-.create-post-box input {
+.create-article-box input {
   margin-top: 20px;
   background-color: #f3f2f2;
   height: 50px;
@@ -578,7 +538,15 @@ footer a {
   font-size: large;
 }
 
-.create-post-box textarea {
+.create-article-box select {
+  margin-top: 20px;
+  background-color: #f3f2f2;
+  height: 50px;
+  border: 0;
+  font-size: large;
+}
+
+.create-article-box textarea {
   margin-top: 20px;
   background-color: #f3f2f2;
   height: 500px;
@@ -586,7 +554,7 @@ footer a {
   font-size: large;
 }
 
-.create-post-box button {
+.create-article-box button {
   margin-top: 100px;
   background-color: darkkhaki;
   height: 70px;
@@ -597,8 +565,6 @@ footer a {
 
 #errorMessage {
   display: none;
-  color: black;
-  background-color: #f85555;
   margin-top: 50px;
   padding: 10px;
   font-size: large;
@@ -623,4 +589,20 @@ footer a {
 
 .href-btn:hover {
   background-color: #e47be8;
+}
+dl {
+  margin: 0;      /* remove default margin */
+}
+
+dt, dd {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+}
+dt {
+  font-weight: bold;
+}
+dd {
+  font-weight: 0 ;
 }
