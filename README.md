@@ -3,7 +3,7 @@
 ## Instructions
 - Create a Supabase account
    .Create tables for articles
-   .create policy
+   .Create policy
 - Add the URL and anon key to js/supabase.js consts
 ## Technical feature
 - plain javascript. No Javascript framework
